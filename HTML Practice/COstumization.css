@@ -1,0 +1,29 @@
+p
+{
+    background-color: brown;
+    font-size: 30;
+}
+.p1
+{
+    color: rgb(241, 56, 23);
+}
+.second
+{
+    font-size: 25;
+    color: rgb(0, 162, 255);
+}
+.third
+{
+    font-size: 25;
+    color: rgb(255, 199, 15);
+}
+.fourth
+{
+    font-size: 25;
+    color: rgba(126, 235, 37, 0.253);
+}
+hr{
+    width: 50%;
+    margin-right: 0%;
+    align-items: right;
+}
