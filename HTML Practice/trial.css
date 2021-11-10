@@ -21,7 +21,7 @@ body
     margin: 0%;
     width: 75%;
     height: 33.33%;
-    left:35%;
+    left:25%;
     top:0%;
     background: green;
 }
@@ -38,20 +38,4 @@ body
 .mwhite
 {
     position: absolute;
-}
-p{
-    position: absolute;
-    left:-10%;
-}
-p:hover
-{
-    color: red;
-}
-img{
-    position: absolute;
-}
-img:hover
-{
-    width: 50%;
-    height: 150%;
 }
