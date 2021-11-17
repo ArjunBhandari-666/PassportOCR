@@ -1,0 +1,28 @@
+body{
+    margin: 0%;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.lefthalf
+{
+    margin: 0%;
+    overflow: hidden;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    width: 50%;
+    background: linear-gradient(180deg, #64FFC7 0%, #7CEFFF 100%);
+}
+.righthalf
+{
+    margin: 0%;
+    overflow: hidden;
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    height: 100%;
+    width: 50%;
+    background: linear-gradient(180deg, #1975FF 4.17%, #6775F1 69.15%);
+}
