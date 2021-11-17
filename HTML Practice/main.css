@@ -26,3 +26,11 @@ body{
     width: 50%;
     background: linear-gradient(180deg, #1975FF 4.17%, #6775F1 69.15%);
 }
+.lefthalf:hover
+{
+    background: #FFFFFF
+}
+.righthalf:hover
+{
+    background: #000000
+}
