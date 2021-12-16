@@ -3,8 +3,8 @@ from pytesseract import pytesseract
   
 # Defining paths to tesseract.exe
 # and the image we would be using
-path_to_tesseract = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-image_path = r"csv\sample_text.png"
+path_to_tesseract = r"c:\users\arjun\anaconda3\lib\site-packages"
+image_path = r"Passport.jpg"
   
 # Opening the image & storing it in an image object
 img = Image.open(image_path)
