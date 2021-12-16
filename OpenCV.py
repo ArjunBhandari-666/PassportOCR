@@ -3,7 +3,7 @@ from pytesseract import pytesseract
   
 # Defining paths to tesseract.exe
 # and the image we would be using
-path_to_tesseract = r"c:\users\arjun\anaconda3\lib\site-packages"
+path_to_tesseract = r"c:\users\aayan\anaconda3\lib\site-packages"
 image_path = r"Passport.jpg"
   
 # Opening the image & storing it in an image object
