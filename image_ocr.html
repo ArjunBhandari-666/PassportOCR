@@ -7,13 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Text OCR</title>
     <script src='image-text.js'></script>
+    <script data-main="" src="node_modules/requirejs/require.js"></script>
 </head>
 
 <body>
     <h1>IMAGE TEXT EXTRACTION USING TESSERACT.JS</h1>
     <script>
         Tesseract.recognize(
-            'image-text.jpg',
+            'Passport.jpg',
             'eng',
             { logger: m => console.log(m) }
         ).then(({ data: { text } }) => {
