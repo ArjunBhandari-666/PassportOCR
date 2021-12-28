@@ -55,3 +55,17 @@ body{
     letter-spacing: 0.06em;
     color: #FFFFFF;
 }
+
+#text
+{
+    font-family: Berlin Sans FB Demi;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 58px;
+    line-height: 65px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.06em;
+    color: #FFFFFF;
+}
