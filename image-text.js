@@ -6,7 +6,6 @@ tesseract.recognize("image-text.jpg", "eng", {
 }).then(result => {
     console.log(result.data.text)
 }).catch(err => {
-    console.log(err.message)
 })
 
 const getImageText = async (fileName, lang, logger) => {
