@@ -6,18 +6,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Text OCR</title>
+    <p class="Output"></p>
     <script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
 </head>
 
 <body>
     <h1>IMAGE TEXT EXTRACTION USING TESSERACT.JS</h1>
     <script>
+        var op=" ";
         Tesseract.recognize(
             'OldPassport.jpeg',
             'eng',
             { logger: m => console.log(m) }
         ).then(({ data: { text } }) => {
-            console.log(text);
+            for(var i=0;i<text.length-18;i++)
+            {
+                if(parseInt(text[i])>=0 && parseInt(text[i])<=9 && parseInt(text[i+1])>=0 && parseInt(text[i+1])<=9 && parseInt(text[i+2])>=0 && parseInt(text[i+2])<=9)
+                {
+                    for(var j=0;j<18;j++)
+                    {
+                        op+=text[i];
+                        i++;
+                    }
+                    i=text.length;
+                }
+            }
+            console.log("ID number : "+op);
         })
     </script>
 </body>
