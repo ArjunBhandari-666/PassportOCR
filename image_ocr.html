@@ -13,25 +13,38 @@
 <body>
     <h1>IMAGE TEXT EXTRACTION USING TESSERACT.JS</h1>
     <script>
-        var op=" ";
+        var id=" ";
         Tesseract.recognize(
             'Simpler.jpeg',
             'eng',
             { logger: m => console.log(m) }
         ).then(({ data: { text } }) => {
+            console.log(text)
             for(var i=0;i<text.length-18;i++)
             {
                 if(parseInt(text[i])>=0 && parseInt(text[i])<=9 && parseInt(text[i+1])>=0 && parseInt(text[i+1])<=9 && parseInt(text[i+2])>=0 && parseInt(text[i+2])<=9)
                 {
                     for(var j=0;j<18;j++)
                     {
-                        op+=text[i];
+                        id+=text[i];
                         i++;
                     }
                     i=text.length;
                 }
             }
-            console.log("ID number : "+op);
+            // for(var i=0;i<text.length-18;i++)
+            // {
+            //     if(parseInt(text[i])>=0 && parseInt(text[i])<=9 && parseInt(text[i+1])>=0 && parseInt(text[i+1])<=9 && parseInt(text[i+2])>=0 && parseInt(text[i+2])<=9)
+            //     {
+            //         for(var j=0;j<18;j++)
+            //         {
+            //             id+=text[i];
+            //             i++;
+            //         }
+            //         i=text.length;
+            //     }
+            // }
+            console.log("ID number : "+id);
         })
     </script>
 </body>
