@@ -13,7 +13,7 @@
     <h1>IMAGE TEXT EXTRACTION USING TESSERACT.JS</h1>
     <script>
         Tesseract.recognize(
-            'Pass2.jpeg',
+            'OldPassport.jpeg',
             'eng',
             { logger: m => console.log(m) }
         ).then(({ data: { text } }) => {
