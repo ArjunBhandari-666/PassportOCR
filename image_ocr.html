@@ -41,13 +41,15 @@
                 {
                     while(text[i]!='\n')
                     {
+                        if(text[i]==" "&&text[i+1]>="a"&&text[i+1]<="z")
+                            break;
                         name+=text[i];
                         i++;
                     }
                     i=text.length;
                 }
             }
-            console.log(text)
+            // console.log(text)
             console.log("ID number : "+id);
             console.log(name)
         })
