@@ -17,7 +17,7 @@
         img = document.createElement("img");
         img.src = "PIMG/Upside.jpeg";
         img.style="-webkit-filter: grayscale(100%); /* Chrome, Safari, Opera */filter: grayscale(100%);"
-        var id="",name="";
+        var id="",name="",dob="";
         Tesseract.recognize(
             img,
             'eng',
@@ -49,9 +49,24 @@
                     i=text.length;
                 }
             }
-            // console.log(text)
+            for(var i=0;i<text.length-18;i++)
+            {
+                if(text[i]=='D' && text[i+1]=='a' && text[i+2]=='t' && text[i+3]=='e' && text[i+5]=='o' && text[i+6]=='f' && text[i+8]=='B' && text[i+9]=='i' && text[i+10]=='r')
+                {
+                    while(text[i]!='\n')
+                    {
+                        if(text[i]==" "&&text[i+1]>="a"&&text[i+1]<="z")
+                            break;
+                        dob+=text[i];
+                        i++;
+                    }
+                    i=text.length;
+                }
+            }
+            console.log(text)
             console.log("ID number : "+id);
             console.log(name)
+            console.log(dob)
         })
     </script>
 </body>
