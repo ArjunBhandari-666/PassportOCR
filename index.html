@@ -11,12 +11,12 @@
 
 <body>
     <h1>IMAGE TEXT EXTRACTION USING TESSERACT.JS</h1>
-    <p class="IDno">Try1</p>
+    <p class="IDno">Try2</p>
     <script>
         var op=" ";
         var id=" ";
         Tesseract.recognize(
-            'PBIMG/OPB.jpeg',
+            'PIMG/Left.jpeg',
             'eng',
             { logger: m => console.log(m) }
         ).then(({ data: { text } }) => {
