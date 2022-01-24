@@ -11,21 +11,29 @@
 
 <body>
     <h1>IMAGE TEXT EXTRACTION USING TESSERACT.JS</h1>
-<<<<<<< Updated upstream
-    <script>var 
-        img = document.createElement("img");
-        img.src = "PIMG/Downside.jpeg";
-        img.style="-webkit-filter: grayscale(100%); /* Chrome, Safari, Opera */filter: grayscale(100%);"
-        var id="",name="",dob="";
-=======
     <script>
->>>>>>> Stashed changes
+        var op=" ";
+        var id=" ";
         Tesseract.recognize(
-            'image-text.jpg',
+            'PIMG/OldPassport.jpeg',
             'eng',
             { logger: m => console.log(m) }
         ).then(({ data: { text } }) => {
-            console.log(text);
+            console.log(text)
+            for(var i=0;i<text.length-18;i++)
+            {
+                if(parseInt(text[i])>=0 && parseInt(text[i])<=9 && parseInt(text[i+1])>=0 && parseInt(text[i+1])<=9 && parseInt(text[i+2])>=0 && parseInt(text[i+2])<=9)
+                {
+                    for(var j=0;j<18;j++)
+                    {
+                        op+=text[i];
+                        id+=text[i];
+                        i++;
+                    }
+                    i=text.length;
+                }
+            }
+            console.log("ID number : "+id);
         })
     </script>
 </body>
