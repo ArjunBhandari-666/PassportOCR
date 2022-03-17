@@ -29,6 +29,7 @@
             var expiry=" ";
             var flag=0;
             var name=" ";
+            var gender=" ";
 
             for(var i=0;i<text.length;i++)
             {
@@ -83,6 +84,13 @@
                         name=name+text[k];
                    }
                 }
+                if(text[i]=="S"&&text[i+1]=="e"&&text[i+2]=="x"&&text[i+3]==":")
+                {
+                   for(var m=i+4;text[m]!='\n';m=m+1)
+                   {
+                        gender=gender+text[m];
+                   }
+                }
             }
             console.log("ID number : "+id);
             console.log("Nationality : "+nationality);
@@ -90,6 +98,14 @@
             console.log("Issuance Date : "+issuance);
             console.log("Expiry Date : "+expiry);
             console.log("Name : "+name);
+            if(gender=="M")
+            {
+                console.log("Gender:  Male")
+            }
+            else if(gender="F")
+            {
+                console.log("Gender:  Female")
+            }
             // YOUR CODE ENDS HERE
         })
     </script>
