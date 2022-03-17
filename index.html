@@ -13,29 +13,84 @@
     <h1>IMAGE TEXT EXTRACTION USING TESSERACT.JS</h1>
     <p class="IDno">Try2</p>
     <script>
-        var op=" ";
-        var id=" ";
         Tesseract.recognize(
-            'PBIMG/OPBIMG1.jpeg',
+            'PIMG/UtD.jpeg',
             'eng',
             { logger: m => console.log(m) }
         ).then(({ data: { text } }) => {
             console.log(text)
-            for(var i=0;i<text.length-18;i++)
+            
+            // YOUR CODE GOES HERE
+
+            var nationality=" ";
+            var id=" ";
+            var dob=" ";
+            var issuance=" ";
+            var expiry=" ";
+            var flag=0;
+            var name=" ";
+
+            for(var i=0;i<text.length;i++)
             {
-                if(parseInt(text[i])>=0 && parseInt(text[i])<=9 && parseInt(text[i+1])>=0 && parseInt(text[i+1])<=9 && parseInt(text[i+2])>=0 && parseInt(text[i+2])<=9)
+                if(parseInt(text[i])>=0 && parseInt(text[i])<=9 && parseInt(text[i+1])>=0 && parseInt(text[i+1])<=9 && parseInt(text[i+2])>=0 && parseInt(text[i+2])<=9 && text[i+3]=='-' && parseInt(text[i+4])>=0 && parseInt(text[i+4])<=9)
                 {
                     for(var j=0;j<18;j++)
                     {
-                        op+=text[i];
                         id+=text[i];
                         i++;
                     }
-                    i=text.length;
+                }
+                if(text[i]=="t"&&text[i+1]=="y"&&text[i+2]==":")
+                {
+                   for(var j=i+3;text[j]!='\n';j=j+1)
+                   {
+                        nationality=nationality+text[j];
+                   }
+                }
+                if(parseInt(text[i])>=0 && parseInt(text[i])<=9 && parseInt(text[i+1])>=0 && parseInt(text[i+1])<=9 && text[i+2]=='/' && parseInt(text[i+3])>=0 && parseInt(text[i+3])<=9 && parseInt(text[i+4])>=0 && parseInt(text[i+4])<=9 && text[i+5]=='/' )
+                {
+                    if(flag==0)
+                    {
+                         for(var j=0;j<10;j++)
+                        {
+                                dob=dob+text[i];
+                                i++;
+                        }
+                        flag=1;
+                    }
+                    else if (flag==1)
+                    {
+                        for(var j=0;j<10;j++)
+                        {
+                                issuance=issuance+text[i];
+                                i++;
+                        }
+                        flag=3;
+                    }
+                    else if(flag==3)
+                    {
+                        for(var j=0;j<10;j++)
+                        {
+                                expiry=expiry+text[i];
+                                i++;
+                        }
+                    }
+                }
+                if(text[i]=="N"&&text[i+1]=="a"&&text[i+2]=="m"&&text[i+3]=="e"&&text[i+4]==":")
+                {
+                   for(var k=i+5;text[k]!='\n';k=k+1)
+                   {
+                        name=name+text[k];
+                   }
                 }
             }
             console.log("ID number : "+id);
-            document.getElementsByClassName("IDno")[0].innerHTML=id + text
+            console.log("Nationality : "+nationality);
+            console.log("DOB : "+dob);
+            console.log("Issuance Date : "+issuance);
+            console.log("Expiry Date : "+expiry);
+            console.log("Name : "+name);
+            // YOUR CODE ENDS HERE
         })
     </script>
 </body>
