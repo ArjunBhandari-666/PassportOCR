@@ -1,114 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
+    <title></title>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Text OCR</title>
-    <script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
-</head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<body>
-    <h1>IMAGE TEXT EXTRACTION USING TESSERACT.JS</h1>
-    <p class="IDno">Try2</p>
-    <script>
-        Tesseract.recognize(
-            'PIMG/LtR.jpeg',
-            'eng',
-            { logger: m => console.log(m) }
-        ).then(({ data: { text } }) => {
-            console.log(text)
+    <script src='https://unpkg.com/tesseract.js@v2.0.0-alpha.10/dist/tesseract.min.js'></script>
+    
+  </head>
+  <body>
+      <table style="text-align: center">
+        <tr>
+          <td><b><u>Video Input</u></b></td>
+          <td><b><u>Snapshot</u></b></td>
+        </tr>
+        <tr>
+          <td>
+            <video id="videoele" style="width: 400px; height: 300px;" autoplay playsinline></video>
+          </td>
+          <td style="min-width: 400px;">            
+              <img id="imageele" src="" style="max-width: 400px; max-height: 200px;">            
+          </td>
+        </tr>
+        <tr>
+          <td><b><u>Status</u></b></td>
+          <td><b><u>Output</u></b></td>
+        </tr>
+        <tr style="height: 100px;">
+            <td>
+                <div id="ocr_status"> </div>
+            </td>
+            <td style="text-align: justify;">
+                <div id="ocr_results"> </div>
+            </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <button style="padding: 1em" type="button" id="btnele"><b>Run OCR</b></button>
+          </td>
+        </tr>
+      </table>
+      
+      <canvas id="canvasele" style="display:none;"></canvas>
+      
+      <script>
+          const constraints = {
+            video: {'facingMode':'environment',width: {min: 1280}, height: {min: 720}}
+          };        
+          const video = document.getElementById('videoele');
+          const img = document.getElementById('imageele');
+          const canvas = document.createElement('canvas');
+          const screenshotButton = document.getElementById('btnele');
+
+          function hasGetUserMedia() {
+            return !!(navigator.mediaDevices &&
+              navigator.mediaDevices.getUserMedia);
+          }
+
+          if (hasGetUserMedia()) {
+            // Good to go!
+              navigator.mediaDevices.getUserMedia(constraints).then(gotStream).catch(handleError);
+
+          } else {
+            alert('getUserMedia() is not supported by your browser');
+          }      
+      
+          function gotStream(stream) {
+            window.stream = stream; // make stream available to console
+            video.srcObject = stream;
+          }
+
+          function handleError(error) {
+            console.log(error);
+          }
+
+          screenshotButton.onclick = video.onclick = function() {
+            document.getElementById("ocr_results").innerText = "";
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
+            // Other browsers will fall back to image/png
+            img.src = canvas.toDataURL('image/png');
+            runOCR(img.src);
+          };    
+
+          function runOCR(url) {
             
-            // YOUR CODE GOES HERE
+            const worker = new Tesseract.TesseractWorker();
+            worker.recognize(url)
+                .then(function(result) {
+                    document.getElementById("ocr_results")
+                            .innerText = result.text;
+                }).progress(function(result) {
+                    document.getElementById("ocr_status")
+                            .innerText = result["status"] + " (" +
+                                (result["progress"] * 100) + "%)";
+                });
+          }         
 
-            var nationality=" ";
-            var id=" ";
-            var dob=" ";
-            var issuance=" ";
-            var expiry=" ";
-            var flag=0;
-            var name=" ";
-            var gender=" ";
-
-            for(var i=0;i<text.length;i++)
-            {
-                if(parseInt(text[i])>=0 && parseInt(text[i])<=9 && parseInt(text[i+1])>=0 && parseInt(text[i+1])<=9 && parseInt(text[i+2])>=0 && parseInt(text[i+2])<=9 && text[i+3]=='-' && parseInt(text[i+4])>=0 && parseInt(text[i+4])<=9)
-                {
-                    for(var j=0;j<18;j++)
-                    {
-                        id+=text[i];
-                        i++;
-                    }
-                }
-                if(text[i]=="t"&&text[i+1]=="y"&&text[i+2]==":")
-                {
-                   for(var j=i+3;text[j]!='\n';j=j+1)
-                   {
-                        nationality=nationality+text[j];
-                   }
-                }
-                if(parseInt(text[i])>=0 && parseInt(text[i])<=9 && parseInt(text[i+1])>=0 && parseInt(text[i+1])<=9 && text[i+2]=='/' && parseInt(text[i+3])>=0 && parseInt(text[i+3])<=9 && parseInt(text[i+4])>=0 && parseInt(text[i+4])<=9 && text[i+5]=='/' )
-                {
-                    if(flag==0)
-                    {
-                         for(var j=0;j<10;j++)
-                        {
-                                dob=dob+text[i];
-                                i++;
-                        }
-                        flag=1;
-                    }
-                    else if (flag==1)
-                    {
-                        for(var j=0;j<10;j++)
-                        {
-                                issuance=issuance+text[i];
-                                i++;
-                        }
-                        flag=3;
-                    }
-                    else if(flag==3)
-                    {
-                        for(var j=0;j<10;j++)
-                        {
-                                expiry=expiry+text[i];
-                                i++;
-                        }
-                    }
-                }
-                if(text[i]=="N"&&text[i+1]=="a"&&text[i+2]=="m"&&text[i+3]=="e"&&text[i+4]==":")
-                {
-                   for(var k=i+5;text[k]!='\n';k=k+1)
-                   {
-                        name=name+text[k];
-                   }
-                }
-                if(text[i]=="S"&&text[i+1]=="e"&&text[i+2]=="x"&&text[i+3]==":")
-                {
-                   for(var m=i+4;text[m]!='\n';m=m+1)
-                   {
-                        gender=gender+text[m];
-                   }
-                }
-            }
-            console.log("ID number : "+id);
-            console.log("Nationality : "+nationality);
-            console.log("DOB : "+dob);
-            console.log("Issuance Date : "+issuance);
-            console.log("Expiry Date : "+expiry);
-            console.log("Name : "+name);
-            if(gender=="M")
-            {
-                console.log("Gender:  Male")
-            }
-            else if(gender="F")
-            {
-                console.log("Gender:  Female")
-            }
-            // YOUR CODE ENDS HERE
-        })
-    </script>
-</body>
-
+      </script>
+  </body>
 </html>
