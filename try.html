@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src='https://unpkg.com/tesseract.js@v2.0.0-alpha.10/dist/tesseract.min.js'></script>
+    
+  </head>
+  <body>
+      <table style="text-align: center">
+        <tr>
+          <td><b><u>Video Input</u></b></td>
+          <td><b><u>Snapshot</u></b></td>
+        </tr>
+        <tr>
+          <td>
+            <video id="videoele" style="width: 400px; height: 300px;" autoplay playsinline></video>
+          </td>
+          <td style="min-width: 400px;">            
+              <img id="imageele" src="" style="max-width: 400px; max-height: 200px;">            
+          </td>
+        </tr>
+        <tr>
+          <td><b><u>Status</u></b></td>
+          <td><b><u>Output</u></b></td>
+        </tr>
+        <tr style="height: 100px;">
+            <td>
+                <div id="ocr_status"> </div>
+            </td>
+            <td style="text-align: justify;">
+                <div id="ocr_results"> </div>
+            </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <button style="padding: 1em" type="button" id="btnele"><b>Run OCR</b></button>
+          </td>
+        </tr>
+      </table>
+      
+      <canvas id="canvasele" style="display:none;"></canvas>
+      
+      <script>
+          const constraints = {
+            video: {'facingMode':'environment',width: {min: 1280}, height: {min: 720}}
+          };        
+          const video = document.getElementById('videoele');
+          const img = document.getElementById('imageele');
+          const canvas = document.createElement('canvas');
+          const screenshotButton = document.getElementById('btnele');
+
+          function hasGetUserMedia() {
+            return !!(navigator.mediaDevices &&
+              navigator.mediaDevices.getUserMedia);
+          }
+
+          if (hasGetUserMedia()) {
+            // Good to go!
+              navigator.mediaDevices.getUserMedia(constraints).then(gotStream).catch(handleError);
+
+          } else {
+            alert('getUserMedia() is not supported by your browser');
+          }      
+      
+          function gotStream(stream) {
+            window.stream = stream; // make stream available to console
+            video.srcObject = stream;
+          }
+
+          function handleError(error) {
+            console.log(error);
+          }
+
+          screenshotButton.onclick = video.onclick = function() {
+            document.getElementById("ocr_results").innerText = "";
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
+            // Other browsers will fall back to image/png
+            img.src = canvas.toDataURL('image/png');
+            runOCR(img.src);
+          };    
+
+          function runOCR(url) {
+            
+            const worker = new Tesseract.TesseractWorker();
+            worker.recognize(url)
+                .then(function(result) {
+                    document.getElementById("ocr_results")
+                            .innerText = result.text;
+                }).progress(function(result) {
+                    document.getElementById("ocr_status")
+                            .innerText = result["status"] + " (" +
+                                (result["progress"] * 100) + "%)";
+                });
+          }         
+
+      </script>
+  </body>
+</html>
